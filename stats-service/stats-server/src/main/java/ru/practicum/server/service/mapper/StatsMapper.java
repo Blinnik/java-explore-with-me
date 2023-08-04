@@ -24,13 +24,4 @@ public class StatsMapper {
                 .timestamp(dateTime)
                 .build();
     }
-
-    public static EndpointHit toEndpointHit(Stats stats) {
-        return EndpointHit.builder()
-                .app(stats.getApp())
-                .uri(stats.getUri())
-                .ip(stats.getIp())
-                .timestamp(String.valueOf(stats.getTimestamp()))
-                .build();
-    }
 }
