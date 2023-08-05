@@ -33,7 +33,3 @@ spring:
     url: jdbc:h2:./test_db/stats-server
     username: test
     password: test
-
-
-
-
