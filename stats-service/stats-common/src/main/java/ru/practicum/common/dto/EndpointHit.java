@@ -20,7 +20,7 @@ public class EndpointHit {
     String app;
 
     @NotNull(message = "uri cannot be null")
-    @Length(message = "uri: the string length should be from 2 to 50 characters", min = 2, max = 50)
+    @Length(message = "uri: the string length should be from 2 to 300 characters", min = 2, max = 300)
     String uri;
 
     @NotNull(message = "ip cannot be null")
