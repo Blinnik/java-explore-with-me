@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ru.practicum.common.dto.EndpointHit;
 import ru.practicum.common.dto.ViewStats;
 import ru.practicum.server.model.Stats;
-import ru.practicum.server.model.dto.GetStatsParams;
+import ru.practicum.server.model.param.GetStatsParams;
 import ru.practicum.server.repository.StatsRepository;
 import ru.practicum.server.service.mapper.StatsMapper;
 
@@ -40,7 +40,7 @@ public class StatsServiceImpl implements StatsService {
         Boolean unique = params.getUnique();
 
         if (uris.size() == 0) {
-            uris = statsRepository.findAllUris();
+            uris = statsRepository.findAllUniqueUris();
         }
 
         List<ViewStats> viewStatsList;

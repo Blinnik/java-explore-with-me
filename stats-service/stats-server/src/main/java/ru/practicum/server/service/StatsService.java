@@ -2,7 +2,7 @@ package ru.practicum.server.service;
 
 import ru.practicum.common.dto.EndpointHit;
 import ru.practicum.common.dto.ViewStats;
-import ru.practicum.server.model.dto.GetStatsParams;
+import ru.practicum.server.model.param.GetStatsParams;
 
 import java.util.List;
 

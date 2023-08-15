@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.common.dto.EndpointHit;
 import ru.practicum.common.dto.ViewStats;
-import ru.practicum.server.model.dto.GetStatsParams;
+import ru.practicum.server.model.param.GetStatsParams;
 import ru.practicum.server.repository.StatsRepository;
 
 import java.time.LocalDateTime;
@@ -57,7 +57,7 @@ class StatsServiceTest {
 
         EndpointHit hit2 = EndpointHit.builder()
                 .ip("192.1.1.1")
-                .uri("/event/2") // another id of URI
+                .uri("/event/2")
                 .app("ewm-service")
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(2)))
                 .build();
@@ -105,7 +105,7 @@ class StatsServiceTest {
 
         EndpointHit hit2 = EndpointHit.builder()
                 .ip("192.1.1.1")
-                .uri("/event/2") // another id of URI
+                .uri("/event/2")
                 .app("ewm-service")
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(2)))
                 .build();
