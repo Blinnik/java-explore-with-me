@@ -24,7 +24,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     UserRepository repository;
 
     @Override
-    public UserDto createUser(NewUserRequest userRequest) {
+    public UserDto create(NewUserRequest userRequest) {
         User user = UserMapper.toUser(userRequest);
 
         User createdUser = repository.save(user);
@@ -34,7 +34,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     }
 
     @Override
-    public List<UserDto> getUsers(List<Long> userIds, PaginationConfig paginationConfig) {
+    public List<UserDto> getAll(List<Long> userIds, PaginationConfig paginationConfig) {
         List<User> users;
         if (userIds == null) {
             users = repository.findAll(paginationConfig.getPageable()).getContent();
@@ -47,7 +47,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
+    public void delete(Long userId) {
         if (!repository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
         }

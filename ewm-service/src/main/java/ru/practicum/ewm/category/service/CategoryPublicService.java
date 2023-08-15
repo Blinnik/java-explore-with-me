@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CategoryPublicService {
 
-    CategoryDto getCategory(Long catId);
+    CategoryDto getOne(Long catId);
 
-    List<CategoryDto> getCategories(PaginationConfig paginationConfig);
+    List<CategoryDto> getAll(PaginationConfig paginationConfig);
 }

@@ -11,7 +11,7 @@ import ru.practicum.exceptionslibrary.exception.BadRequestException;
 import java.time.LocalDateTime;
 
 public class EventUtil {
-    public static void updateEventFields(UpdateEventUserRequest updateEventUserRequest, Event event) {
+    public static void updateFields(UpdateEventUserRequest updateEventUserRequest, Event event) {
         String annotation = updateEventUserRequest.getAnnotation();
         Long category = updateEventUserRequest.getCategory();
         String description = updateEventUserRequest.getDescription();

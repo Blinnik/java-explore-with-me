@@ -24,7 +24,7 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     CompilationRepository compilationRepository;
 
     @Override
-    public List<CompilationDto> getCompilations(Boolean pinned, PaginationConfig paginationConfig) {
+    public List<CompilationDto> getAll(Boolean pinned, PaginationConfig paginationConfig) {
         List<Compilation> compilations;
         Pageable pageable = paginationConfig.getPageable();
         if (pinned == null) {
@@ -39,7 +39,7 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     }
 
     @Override
-    public CompilationDto getCompilation(Long compId) {
+    public CompilationDto getOne(Long compId) {
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(
                         () -> new NotFoundException(String.format("Compilation with id=%s was not found", compId))

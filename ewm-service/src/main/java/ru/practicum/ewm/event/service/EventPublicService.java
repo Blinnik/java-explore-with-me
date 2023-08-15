@@ -10,9 +10,9 @@ import java.util.List;
 
 public interface EventPublicService {
 
-    EventFullDto getEvent(Long eventId, HttpServletRequest request);
+    EventFullDto getOne(Long eventId, HttpServletRequest request);
 
-    List<EventShortDto> getEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                  LocalDateTime rangeEnd, Boolean onlyAvailable, String sort,
-                                  PaginationConfig paginationConfig, HttpServletRequest request);
+    List<EventShortDto> getAll(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
+                               LocalDateTime rangeEnd, Boolean onlyAvailable, String sort,
+                               PaginationConfig paginationConfig, HttpServletRequest request);
 }

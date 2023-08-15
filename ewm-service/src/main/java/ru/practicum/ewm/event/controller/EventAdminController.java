@@ -24,24 +24,24 @@ public class EventAdminController {
     EventAdminService eventAdminService;
 
     @GetMapping
-    public List<EventFullDto> getEvents(@RequestParam(required = false) List<Long> users,
-                                        @RequestParam(required = false) List<EventState> states,
-                                        @RequestParam(required = false) List<Long> categories,
-                                        @RequestParam(required = false)
-                                        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
-                                        @RequestParam(required = false)
-                                        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
-                                        PaginationConfig paginationConfig) {
+    public List<EventFullDto> getAll(@RequestParam(required = false) List<Long> users,
+                                     @RequestParam(required = false) List<EventState> states,
+                                     @RequestParam(required = false) List<Long> categories,
+                                     @RequestParam(required = false)
+                                     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
+                                     @RequestParam(required = false)
+                                     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
+                                     PaginationConfig paginationConfig) {
 
-        return eventAdminService.getEvents(users, states, categories,
+        return eventAdminService.getAll(users, states, categories,
                 rangeStart, rangeEnd, paginationConfig);
     }
 
     @PatchMapping("/{eventId}")
-    public EventFullDto updateEvent(@PathVariable Long eventId,
-                                    @RequestBody @Valid UpdateEventUserRequest updateEventUserRequest) {
+    public EventFullDto update(@PathVariable Long eventId,
+                               @RequestBody @Valid UpdateEventUserRequest updateEventUserRequest) {
         EventUtil.checkEventDate(updateEventUserRequest.getEventDate(), 1);
 
-        return eventAdminService.updateEvent(eventId, updateEventUserRequest);
+        return eventAdminService.update(eventId, updateEventUserRequest);
     }
 }

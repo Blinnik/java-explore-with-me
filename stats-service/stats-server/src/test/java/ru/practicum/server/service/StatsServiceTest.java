@@ -38,7 +38,7 @@ class StatsServiceTest {
                 .timestamp(formatter.format(LocalDateTime.now()))
                 .build();
 
-        statsService.saveHit(hit);
+        statsService.save(hit);
 
         Long updatedCountOfRecords = statsRepository.count();
         assertEquals(countOfRecords + 1, updatedCountOfRecords);
@@ -69,9 +69,9 @@ class StatsServiceTest {
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(3)))
                 .build();
 
-        statsService.saveHit(hit);
-        statsService.saveHit(hit2);
-        statsService.saveHit(hit3);
+        statsService.save(hit);
+        statsService.save(hit2);
+        statsService.save(hit3);
 
         GetStatsParams getStatsParams = new GetStatsParams();
         getStatsParams.setStart(LocalDateTime.now().minusDays(1));
@@ -79,7 +79,7 @@ class StatsServiceTest {
         getStatsParams.setUris(List.of("/event/1", "/event/2"));
         getStatsParams.setUnique(false);
 
-        List<ViewStats> viewStatsList = statsService.getStats(getStatsParams);
+        List<ViewStats> viewStatsList = statsService.getAll(getStatsParams);
         Long updatedCountOfRecords = statsRepository.count();
 
         assertEquals(countOfRecords + 3, updatedCountOfRecords);
@@ -124,10 +124,10 @@ class StatsServiceTest {
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(4)))
                 .build();
 
-        statsService.saveHit(hit);
-        statsService.saveHit(hit2);
-        statsService.saveHit(hit3);
-        statsService.saveHit(hit4);
+        statsService.save(hit);
+        statsService.save(hit2);
+        statsService.save(hit3);
+        statsService.save(hit4);
 
         GetStatsParams getStatsParams = new GetStatsParams();
         getStatsParams.setStart(LocalDateTime.now().minusDays(1));
@@ -135,7 +135,7 @@ class StatsServiceTest {
         getStatsParams.setUris(List.of("/event/1", "/event/2"));
         getStatsParams.setUnique(true);
 
-        List<ViewStats> viewStatsList = statsService.getStats(getStatsParams);
+        List<ViewStats> viewStatsList = statsService.getAll(getStatsParams);
         Long updatedCountOfRecords = statsRepository.count();
 
         assertEquals(countOfRecords + 4, updatedCountOfRecords);
@@ -180,10 +180,10 @@ class StatsServiceTest {
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(4)))
                 .build();
 
-        statsService.saveHit(hit);
-        statsService.saveHit(hit2);
-        statsService.saveHit(hit3);
-        statsService.saveHit(hit4);
+        statsService.save(hit);
+        statsService.save(hit2);
+        statsService.save(hit3);
+        statsService.save(hit4);
 
         GetStatsParams getStatsParams = new GetStatsParams();
         getStatsParams.setStart(LocalDateTime.now().minusDays(1));
@@ -191,7 +191,7 @@ class StatsServiceTest {
         getStatsParams.setUris(List.of());
         getStatsParams.setUnique(false);
 
-        List<ViewStats> viewStatsList = statsService.getStats(getStatsParams);
+        List<ViewStats> viewStatsList = statsService.getAll(getStatsParams);
         Long updatedCountOfRecords = statsRepository.count();
 
         assertEquals(countOfRecords + 4, updatedCountOfRecords);
@@ -235,10 +235,10 @@ class StatsServiceTest {
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(4)))
                 .build();
 
-        statsService.saveHit(hit);
-        statsService.saveHit(hit2);
-        statsService.saveHit(hit3);
-        statsService.saveHit(hit4);
+        statsService.save(hit);
+        statsService.save(hit2);
+        statsService.save(hit3);
+        statsService.save(hit4);
 
         GetStatsParams getStatsParams = new GetStatsParams();
         getStatsParams.setStart(LocalDateTime.now().minusDays(1));
@@ -246,7 +246,7 @@ class StatsServiceTest {
         getStatsParams.setUris(List.of());
         getStatsParams.setUnique(true);
 
-        List<ViewStats> viewStatsList = statsService.getStats(getStatsParams);
+        List<ViewStats> viewStatsList = statsService.getAll(getStatsParams);
         Long updatedCountOfRecords = statsRepository.count();
 
         assertEquals(countOfRecords + 4, updatedCountOfRecords);
@@ -290,10 +290,10 @@ class StatsServiceTest {
                 .timestamp(formatter.format(LocalDateTime.now().plusDays(4)))
                 .build();
 
-        statsService.saveHit(hit);
-        statsService.saveHit(hit2);
-        statsService.saveHit(hit3);
-        statsService.saveHit(hit4);
+        statsService.save(hit);
+        statsService.save(hit2);
+        statsService.save(hit3);
+        statsService.save(hit4);
 
         GetStatsParams getStatsParams = new GetStatsParams();
         getStatsParams.setStart(LocalDateTime.now().minusDays(1));
@@ -301,7 +301,7 @@ class StatsServiceTest {
         getStatsParams.setUris(List.of("/not_existing_endpoint"));
         getStatsParams.setUnique(false);
 
-        List<ViewStats> viewStatsList = statsService.getStats(getStatsParams);
+        List<ViewStats> viewStatsList = statsService.getAll(getStatsParams);
         Long updatedCountOfRecords = statsRepository.count();
 
         assertEquals(countOfRecords + 4, updatedCountOfRecords);

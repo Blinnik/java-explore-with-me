@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface EventAdminService {
 
-    List<EventFullDto> getEvents(List<Long> users, List<EventState> states, List<Long> categoriesIds,
-                                 LocalDateTime rangeStart, LocalDateTime rangeEnd, PaginationConfig paginationConfig);
+    List<EventFullDto> getAll(List<Long> users, List<EventState> states, List<Long> categoriesIds,
+                              LocalDateTime rangeStart, LocalDateTime rangeEnd, PaginationConfig paginationConfig);
 
-    EventFullDto updateEvent(Long eventId, UpdateEventUserRequest updateEventUserRequest);
+    EventFullDto update(Long eventId, UpdateEventUserRequest updateEventUserRequest);
 }

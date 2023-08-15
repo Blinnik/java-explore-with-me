@@ -22,19 +22,19 @@ public class UserAdminController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto createUser(@RequestBody @Valid NewUserRequest userRequest) {
-        return userAdminService.createUser(userRequest);
+    public UserDto create(@RequestBody @Valid NewUserRequest userRequest) {
+        return userAdminService.create(userRequest);
     }
 
     @GetMapping
-    public List<UserDto> getUsers(@RequestParam(required = false) List<Long> ids,
-                                  @Valid PaginationConfig paginationConfig) {
-        return userAdminService.getUsers(ids, paginationConfig);
+    public List<UserDto> getAll(@RequestParam(required = false) List<Long> ids,
+                                @Valid PaginationConfig paginationConfig) {
+        return userAdminService.getAll(ids, paginationConfig);
     }
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable Long userId) {
-        userAdminService.deleteUser(userId);
+    public void delete(@PathVariable Long userId) {
+        userAdminService.delete(userId);
     }
 }

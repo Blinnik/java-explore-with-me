@@ -6,7 +6,7 @@ import ru.practicum.ewm.compilation.model.dto.CompilationDto;
 import java.util.List;
 
 public interface CompilationPublicService {
-    List<CompilationDto> getCompilations(Boolean pinned, PaginationConfig paginationConfig);
+    List<CompilationDto> getAll(Boolean pinned, PaginationConfig paginationConfig);
 
-    CompilationDto getCompilation(Long compId);
+    CompilationDto getOne(Long compId);
 }

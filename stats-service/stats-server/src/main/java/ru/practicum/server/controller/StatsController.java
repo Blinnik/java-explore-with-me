@@ -23,12 +23,12 @@ public class StatsController {
 
     @PostMapping("/hit")
     @ResponseStatus(HttpStatus.CREATED)
-    public EndpointHit saveHit(@RequestBody @Valid EndpointHit hit) {
-        return statsService.saveHit(hit);
+    public EndpointHit save(@RequestBody @Valid EndpointHit hit) {
+        return statsService.save(hit);
     }
 
     @GetMapping("/stats")
-    public List<ViewStats> getStats(@Valid GetStatsParams params) {
+    public List<ViewStats> getAll(@Valid GetStatsParams params) {
         LocalDateTime start = params.getStart();
         LocalDateTime end = params.getEnd();
 
@@ -36,6 +36,6 @@ public class StatsController {
             throw new BadRequestException("The end should be later than the start");
         }
 
-        return statsService.getStats(params);
+        return statsService.getAll(params);
     }
 }

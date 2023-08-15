@@ -57,13 +57,13 @@ public class EventPublicServiceImpl implements EventPublicService {
     }
 
     @Override
-    public EventFullDto getEvent(Long eventId, HttpServletRequest request) {
+    public EventFullDto getOne(Long eventId, HttpServletRequest request) {
         Event event = eventRepository.findByIdAndStateEquals(eventId, EventState.PUBLISHED)
                 .orElseThrow(() -> new NotFoundException(String.format("Event with id=%s was not found", eventId)));
         log.debug("An event with id {} was received", eventId);
 
         if (statsClient != null) {
-            statsClient.saveHit(request, appName);
+            statsClient.save(request, appName);
             log.debug("The stats client saved the request to the statistics");
 
             long uniqueViews = getEventViews(statsClient, eventId, event.getCreatedOn(), true);
@@ -80,9 +80,9 @@ public class EventPublicServiceImpl implements EventPublicService {
     }
 
     @Override
-    public List<EventShortDto> getEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                         LocalDateTime rangeEnd, Boolean onlyAvailable, String sort,
-                                         PaginationConfig paginationConfig, HttpServletRequest request) {
+    public List<EventShortDto> getAll(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
+                                      LocalDateTime rangeEnd, Boolean onlyAvailable, String sort,
+                                      PaginationConfig paginationConfig, HttpServletRequest request) {
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
         if (text != null) {
@@ -137,7 +137,7 @@ public class EventPublicServiceImpl implements EventPublicService {
         log.debug("Filtered events were received");
 
         if (statsClient != null) {
-            statsClient.saveHit(request, appName);
+            statsClient.save(request, appName);
             log.debug("The stats client saved the request to the statistics");
         }
 
@@ -151,7 +151,7 @@ public class EventPublicServiceImpl implements EventPublicService {
             String now = TimeFormatter.formatLocalDateTime(LocalDateTime.now().plusSeconds(1));
             String uri = "/events/" + eventId;
 
-            ResponseEntity<Object> getStatsResponse = statsClient.getStats(dateCreated, now, List.of(uri), unique);
+            ResponseEntity<Object> getStatsResponse = statsClient.getAll(dateCreated, now, List.of(uri), unique);
 
             List<Object> objectList = StatsParser.parseGetStatsToListOfObjects(getStatsResponse);
 

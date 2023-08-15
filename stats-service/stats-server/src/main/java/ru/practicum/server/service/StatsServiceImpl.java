@@ -23,7 +23,7 @@ public class StatsServiceImpl implements StatsService {
     StatsRepository statsRepository;
 
     @Override
-    public EndpointHit saveHit(EndpointHit hit) {
+    public EndpointHit save(EndpointHit hit) {
         Stats stats = StatsMapper.toStats(hit);
 
         statsRepository.save(stats);
@@ -33,7 +33,7 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
-    public List<ViewStats> getStats(GetStatsParams params) {
+    public List<ViewStats> getAll(GetStatsParams params) {
         LocalDateTime start = params.getStart();
         LocalDateTime end = params.getEnd();
         List<String> uris = params.getUris();

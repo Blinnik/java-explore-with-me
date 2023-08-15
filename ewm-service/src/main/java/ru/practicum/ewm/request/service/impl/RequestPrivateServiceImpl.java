@@ -32,7 +32,7 @@ public class RequestPrivateServiceImpl implements RequestPrivateService {
     UserRepository userRepository;
 
     @Override
-    public ParticipationRequestDto createRequest(Long userId, Long eventId) {
+    public ParticipationRequestDto create(Long userId, Long eventId) {
         User requester = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id=%s was not found", userId)));
 
@@ -90,7 +90,7 @@ public class RequestPrivateServiceImpl implements RequestPrivateService {
     }
 
     @Override
-    public ParticipationRequestDto cancelRequest(Long userId, Long requestId) {
+    public ParticipationRequestDto cancel(Long userId, Long requestId) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
         }

@@ -21,13 +21,13 @@ public class CategoryPublicController {
     CategoryPublicService categoryPublicService;
 
     @GetMapping("/{catId}")
-    public CategoryDto getCategory(@PathVariable Long catId) {
-        return categoryPublicService.getCategory(catId);
+    public CategoryDto getOne(@PathVariable Long catId) {
+        return categoryPublicService.getOne(catId);
     }
 
     @GetMapping
-    public List<CategoryDto> getCategories(PaginationConfig paginationConfig) {
-        return categoryPublicService.getCategories(paginationConfig);
+    public List<CategoryDto> getAll(PaginationConfig paginationConfig) {
+        return categoryPublicService.getAll(paginationConfig);
     }
 }
 

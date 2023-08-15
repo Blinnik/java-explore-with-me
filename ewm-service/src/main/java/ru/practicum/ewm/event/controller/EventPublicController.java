@@ -23,24 +23,24 @@ public class EventPublicController {
     EventPublicService eventPublicService;
 
     @GetMapping("/{eventId}")
-    public EventFullDto getEvent(@PathVariable Long eventId,
-                                 HttpServletRequest request) {
+    public EventFullDto getOne(@PathVariable Long eventId,
+                               HttpServletRequest request) {
 
-        return eventPublicService.getEvent(eventId, request);
+        return eventPublicService.getOne(eventId, request);
     }
 
     @GetMapping
-    public List<EventShortDto> getEvents(@RequestParam(required = false) String text,
-                                         @RequestParam(required = false) List<Long> categories,
-                                         @RequestParam(required = false) Boolean paid,
-                                         @RequestParam(required = false)
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
-                                         @RequestParam(required = false)
-                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
-                                         @RequestParam(defaultValue = "false") Boolean onlyAvailable,
-                                         @RequestParam(required = false) String sort,
-                                         PaginationConfig paginationConfig,
-                                         HttpServletRequest request) {
+    public List<EventShortDto> getAll(@RequestParam(required = false) String text,
+                                      @RequestParam(required = false) List<Long> categories,
+                                      @RequestParam(required = false) Boolean paid,
+                                      @RequestParam(required = false)
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
+                                      @RequestParam(required = false)
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
+                                      @RequestParam(defaultValue = "false") Boolean onlyAvailable,
+                                      @RequestParam(required = false) String sort,
+                                      PaginationConfig paginationConfig,
+                                      HttpServletRequest request) {
 
         if (rangeStart != null && rangeEnd != null) {
             if (rangeEnd.isBefore(rangeStart)) {
@@ -48,7 +48,7 @@ public class EventPublicController {
             }
         }
 
-        return eventPublicService.getEvents(text, categories, paid,
+        return eventPublicService.getAll(text, categories, paid,
                 rangeStart, rangeEnd, onlyAvailable, sort, paginationConfig, request);
     }
 }

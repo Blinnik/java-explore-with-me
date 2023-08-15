@@ -24,7 +24,7 @@ public class StatsClient extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> saveHit(HttpServletRequest request, String appName) {
+    public ResponseEntity<Object> save(HttpServletRequest request, String appName) {
         String ip = request.getHeader("X-FORWARDED-FOR");
         if (ip == null) {
             ip = request.getRemoteAddr();
@@ -44,24 +44,24 @@ public class StatsClient extends BaseClient {
         return response;
     }
 
-    public ResponseEntity<Object> getStats(String start,
-                                           String end,
-                                           Boolean unique) {
+    public ResponseEntity<Object> getAll(String start,
+                                         String end,
+                                         Boolean unique) {
 
-        return getStats(start, end, null, unique);
+        return getAll(start, end, null, unique);
     }
 
-    public ResponseEntity<Object> getStats(String start,
-                                           String end,
-                                           List<String> uris) {
+    public ResponseEntity<Object> getAll(String start,
+                                         String end,
+                                         List<String> uris) {
 
-        return getStats(start, end, uris, null);
+        return getAll(start, end, uris, null);
     }
 
-    public ResponseEntity<Object> getStats(String start,
-                                           String end,
-                                           List<String> uris,
-                                           Boolean unique) {
+    public ResponseEntity<Object> getAll(String start,
+                                         String end,
+                                         List<String> uris,
+                                         Boolean unique) {
 
         Map<String, Object> parameters = new HashMap<>(Map.of(
                 "start", start,

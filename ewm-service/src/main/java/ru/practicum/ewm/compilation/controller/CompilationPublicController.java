@@ -18,13 +18,13 @@ public class CompilationPublicController {
     CompilationPublicService compilationPublicService;
 
     @GetMapping
-    public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
-                                                PaginationConfig paginationConfig) {
-        return compilationPublicService.getCompilations(pinned, paginationConfig);
+    public List<CompilationDto> getAll(@RequestParam(required = false) Boolean pinned,
+                                       PaginationConfig paginationConfig) {
+        return compilationPublicService.getAll(pinned, paginationConfig);
     }
 
     @GetMapping("/{compId}")
-    public CompilationDto getCompilation(@PathVariable Long compId) {
-        return compilationPublicService.getCompilation(compId);
+    public CompilationDto getOne(@PathVariable Long compId) {
+        return compilationPublicService.getOne(compId);
     }
 }

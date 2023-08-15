@@ -21,7 +21,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     CategoryRepository repository;
 
     @Override
-    public CategoryDto createCategory(NewCategoryDto newCategoryDto) {
+    public CategoryDto create(NewCategoryDto newCategoryDto) {
         Category category = CategoryMapper.toCategory(newCategoryDto);
 
         Category createdCategory = repository.save(category);
@@ -31,7 +31,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     }
 
     @Override
-    public void deleteCategory(Long catId) {
+    public void delete(Long catId) {
         if (!repository.existsById(catId)) {
             throw new NotFoundException(String.format("Category with id=%s was not found", catId));
         }
@@ -41,7 +41,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     }
 
     @Override
-    public CategoryDto updateCategory(Long catId, CategoryDto categoryDto) {
+    public CategoryDto update(Long catId, CategoryDto categoryDto) {
         if (!repository.existsById(catId)) {
             throw new NotFoundException(String.format("Category with id=%s was not found", catId));
         }

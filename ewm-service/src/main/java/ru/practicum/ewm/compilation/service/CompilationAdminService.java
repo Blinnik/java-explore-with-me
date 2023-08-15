@@ -5,9 +5,9 @@ import ru.practicum.ewm.compilation.model.dto.NewCompilationDto;
 import ru.practicum.ewm.compilation.model.dto.UpdateCompilationRequest;
 
 public interface CompilationAdminService {
-    CompilationDto createCompilation(NewCompilationDto newCompilationDto);
+    CompilationDto create(NewCompilationDto newCompilationDto);
 
-    void deleteCompilation(Long compId);
+    void delete(Long compId);
 
-    CompilationDto updateCompilation(Long compId, UpdateCompilationRequest updateCompilationRequest);
+    CompilationDto update(Long compId, UpdateCompilationRequest updateCompilationRequest);
 }

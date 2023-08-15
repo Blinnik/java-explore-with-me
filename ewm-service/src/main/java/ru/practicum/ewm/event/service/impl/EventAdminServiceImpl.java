@@ -34,9 +34,9 @@ public class EventAdminServiceImpl implements EventAdminService {
     QEvent qEvent = QEvent.event;
 
     @Override
-    public List<EventFullDto> getEvents(List<Long> users, List<EventState> states, List<Long> categories,
-                                        LocalDateTime rangeStart, LocalDateTime rangeEnd,
-                                        PaginationConfig paginationConfig) {
+    public List<EventFullDto> getAll(List<Long> users, List<EventState> states, List<Long> categories,
+                                     LocalDateTime rangeStart, LocalDateTime rangeEnd,
+                                     PaginationConfig paginationConfig) {
 
         BooleanBuilder booleanBuilder = new BooleanBuilder();
 
@@ -71,7 +71,7 @@ public class EventAdminServiceImpl implements EventAdminService {
     }
 
     @Override
-    public EventFullDto updateEvent(Long eventId, UpdateEventUserRequest updateEventUserRequest) {
+    public EventFullDto update(Long eventId, UpdateEventUserRequest updateEventUserRequest) {
         Event foundEvent = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException(String.format("Event with id=%s was not found", eventId)));
 
@@ -95,7 +95,7 @@ public class EventAdminServiceImpl implements EventAdminService {
             }
         }
 
-        EventUtil.updateEventFields(updateEventUserRequest, foundEvent);
+        EventUtil.updateFields(updateEventUserRequest, foundEvent);
 
         Event updatedEvent = eventRepository.save(foundEvent);
         log.debug("An event with an id {} was updated", updatedEvent.getId());

@@ -7,9 +7,9 @@ import ru.practicum.ewm.user.model.dto.UserDto;
 import java.util.List;
 
 public interface UserAdminService {
-    UserDto createUser(NewUserRequest userRequest);
+    UserDto create(NewUserRequest userRequest);
 
-    List<UserDto> getUsers(List<Long> userIds, PaginationConfig paginationConfig);
+    List<UserDto> getAll(List<Long> userIds, PaginationConfig paginationConfig);
 
-    void deleteUser(Long userId);
+    void delete(Long userId);
 }

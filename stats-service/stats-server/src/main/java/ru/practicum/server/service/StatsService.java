@@ -7,7 +7,7 @@ import ru.practicum.server.model.param.GetStatsParams;
 import java.util.List;
 
 public interface StatsService {
-    EndpointHit saveHit(EndpointHit hit);
+    EndpointHit save(EndpointHit hit);
 
-    List<ViewStats> getStats(GetStatsParams params);
+    List<ViewStats> getAll(GetStatsParams params);
 }
