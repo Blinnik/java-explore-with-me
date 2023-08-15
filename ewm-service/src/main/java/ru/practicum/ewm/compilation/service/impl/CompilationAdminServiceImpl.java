@@ -28,7 +28,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     EventRepository eventRepository;
 
     @Override
-    public CompilationDto createCompilation(NewCompilationDto newCompilationDto) {
+    public CompilationDto create(NewCompilationDto newCompilationDto) {
         List<Long> eventIds = newCompilationDto.getEvents();
         List<Event> events = getEventsByIdList(eventIds);
 
@@ -42,7 +42,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     }
 
     @Override
-    public void deleteCompilation(Long compId) {
+    public void delete(Long compId) {
         if (!compilationRepository.existsById(compId)) {
             throw new NotFoundException(String.format("Compilation with id=%s was not found", compId));
         }
@@ -52,7 +52,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     }
 
     @Override
-    public CompilationDto updateCompilation(Long compId, UpdateCompilationRequest updateCompilationRequest) {
+    public CompilationDto update(Long compId, UpdateCompilationRequest updateCompilationRequest) {
         Compilation foundCompilation = compilationRepository.findById(compId)
                 .orElseThrow(
                         () -> new NotFoundException(String.format("Compilation with id=%s was not found", compId))
@@ -61,7 +61,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         List<Long> eventIds = updateCompilationRequest.getEvents();
         List<Event> events = getEventsByIdList(eventIds);
 
-        updateCompilationFields(updateCompilationRequest, foundCompilation);
+        updateFields(updateCompilationRequest, foundCompilation);
 
         Compilation updatedCompilation = compilationRepository.save(foundCompilation);
         log.debug("A compilation with an id {} was updated", updatedCompilation.getId());
@@ -71,8 +71,8 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
         return CompilationMapper.toCompilationDto(updatedCompilation);
     }
 
-    private void updateCompilationFields(UpdateCompilationRequest updateCompilationRequest,
-                                                Compilation compilation) {
+    private void updateFields(UpdateCompilationRequest updateCompilationRequest,
+                              Compilation compilation) {
         String title = updateCompilationRequest.getTitle();
         Boolean pinned = updateCompilationRequest.getPinned();
         List<Long> eventIds = updateCompilationRequest.getEvents();
@@ -96,13 +96,10 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     }
 
     private List<Event> getEventsByIdList(List<Long> eventIds) {
-        List<Event> events = new ArrayList<>();
-        if (eventIds != null) {
-            for (Long eventId : eventIds) {
-                events.add(eventRepository.findById(eventId)
-                        .orElseThrow(() -> new NotFoundException(String.format("Event with id=%s was not found", eventId))));
-            }
+        if (eventIds == null) {
+            return new ArrayList<>();
         }
-        return events;
+
+        return eventRepository.findAllByIdIn(eventIds);
     }
 }

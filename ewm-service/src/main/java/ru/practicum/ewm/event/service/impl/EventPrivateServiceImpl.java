@@ -39,7 +39,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     RequestRepository requestRepository;
 
     @Override
-    public EventFullDto createEvent(Long userId, NewEventDto newEventDto) {
+    public EventFullDto create(Long userId, NewEventDto newEventDto) {
         User initiator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id=%s was not found", userId)));
 
@@ -68,7 +68,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
-    public EventFullDto getEvent(Long userId, Long eventId) {
+    public EventFullDto getOne(Long userId, Long eventId) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
         }
@@ -83,7 +83,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
-    public EventFullDto updateEvent(Long userId, Long eventId, UpdateEventUserRequest updateEventUserRequest) {
+    public EventFullDto update(Long userId, Long eventId, UpdateEventUserRequest updateEventUserRequest) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
         }
@@ -96,7 +96,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             throw new ConflictException("Only pending or canceled events can be changed");
         }
 
-        EventUtil.updateEventFields(updateEventUserRequest, foundEvent);
+        EventUtil.updateFields(updateEventUserRequest, foundEvent);
 
         Event updatedEvent = eventRepository.save(foundEvent);
         log.debug("An event with an id {} was updated", updatedEvent.getId());
@@ -105,7 +105,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
-    public List<ParticipationRequestDto> getEventRequests(Long userId, Long eventId) {
+    public List<ParticipationRequestDto> getRequests(Long userId, Long eventId) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
         }
@@ -123,9 +123,9 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
-    public EventRequestStatusUpdateResult updateEventRequests(Long userId,
-                                                              Long eventId,
-                                                              EventRequestStatusUpdateRequest updateRequest) {
+    public EventRequestStatusUpdateResult updateRequests(Long userId,
+                                                         Long eventId,
+                                                         EventRequestStatusUpdateRequest updateRequest) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
         }
@@ -148,12 +148,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             throw new ConflictException("It is not possible to accept such a number of requests due to the limit");
         }
 
-        List<Request> requests = new ArrayList<>();
-        for (Long requestId : requestIds) {
-            Request request = requestRepository.findById(requestId)
-                    .orElseThrow(() -> new NotFoundException(String.format("Request with id=%s was not found", requestId)));
-            requests.add(request);
-        }
+        List<Request> requests = requestRepository.findAllByIdIn(requestIds);
 
         if (status.equals(RequestStatus.REJECTED)) {
             if (requests.stream().anyMatch(e -> e.getStatus().equals(RequestStatus.CONFIRMED))) {
@@ -163,8 +158,8 @@ public class EventPrivateServiceImpl implements EventPrivateService {
 
         for (Request request : requests) {
             request.setStatus(status);
-            requestRepository.save(request);
         }
+        requestRepository.saveAll(requests);
         log.debug("Requests were updated");
 
         if (status.equals(RequestStatus.CONFIRMED)) {
