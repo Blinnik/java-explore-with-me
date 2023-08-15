@@ -24,7 +24,7 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
 
 
     @Override
-    public CategoryDto getCategory(Long catId) {
+    public CategoryDto getOne(Long catId) {
         Category category = repository.findById(catId)
                 .orElseThrow(() -> new NotFoundException(String.format("Category with id=%s was not found", catId)));
         log.debug("A category with id {} was received", catId);
@@ -33,10 +33,12 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
     }
 
     @Override
-    public List<CategoryDto> getCategories(PaginationConfig paginationConfig) {
-        List<Category> categories = repository.findAll(paginationConfig.getPageable()).getContent();
+    public List<CategoryDto> getAll(PaginationConfig paginationConfig) {
+        List<CategoryDto> categories = repository.findAll(paginationConfig.getPageable())
+                .map(CategoryMapper::toCategoryDto)
+                .getContent();
         log.debug("A list of categories was received");
 
-        return CategoryMapper.toCategoryDto(categories);
+        return categories;
     }
 }
