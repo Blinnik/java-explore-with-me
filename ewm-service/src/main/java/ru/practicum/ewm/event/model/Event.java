@@ -34,7 +34,7 @@ public class Event {
     LocalDateTime eventDate;
 
     @Column(name = "location_lat")
-    Float locationLat ;
+    Float locationLat;
 
     @Column(name = "location_lon")
     Float locationLon;
