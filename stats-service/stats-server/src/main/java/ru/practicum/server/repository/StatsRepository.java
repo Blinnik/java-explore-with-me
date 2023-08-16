@@ -26,10 +26,10 @@ public interface StatsRepository extends JpaRepository<Stats, Long> {
             "GROUP BY s.uri, s.app " +
             "ORDER BY COUNT(DISTINCT s.ip) DESC")
     List<ViewStats> findAllByTimestampBetweenAndUriInAndIpUnique(LocalDateTime start,
-                                                                   LocalDateTime end,
-                                                                   List<String> uriList);
+                                                                 LocalDateTime end,
+                                                                 List<String> uriList);
 
-    @Query("SELECT s.uri " +
+    @Query("SELECT DISTINCT s.uri " +
             "FROM Stats AS s")
-    List<String> findAllUris();
+    List<String> findAllUniqueUris();
 }

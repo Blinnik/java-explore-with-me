@@ -1,4 +1,4 @@
-package ru.practicum.server.model.dto;
+package ru.practicum.server.model.param;
 
 import lombok.AccessLevel;
 import lombok.Getter;
