@@ -2722,8 +2722,8 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(target.commentator).equal(pm.collectionVariables.get(\"uid\"));\r",
-									"    pm.expect(target.event).equal(pm.collectionVariables.get(\"eid\"));\r",
+									"    pm.expect(target.commentator).equal(Number(pm.collectionVariables.get(\"uid\")));\r",
+									"    pm.expect(target.event).equal(Number(pm.collectionVariables.get(\"eid\")));\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2824,6 +2824,7 @@
 									"    pm.response.to.be.json;\r",
 									"});\r",
 									"\r",
+									"const source = pm.collectionVariables.get('response');\r",
 									"const target = pm.response.json();\r",
 									"\r",
 									"pm.test(\"Комментарий должен содержать поля: id, commentator, event, lastUpdated, text, created\", function () {\r",
@@ -2836,7 +2837,7 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(target.id).equal(pm.collectionVariables.get(\"commId\"));\r",
+									"    pm.expect(target.id).equal(Number(pm.collectionVariables.get(\"commId\")));\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2950,8 +2951,8 @@
 									"});\r",
 									"\r",
 									"pm.test(\"Данные в ответе должны соответствовать данным в запросе\", function () {\r",
-									"    pm.expect(target[0].event).equal(pm.collectionVariables.get(\"eid\"));\r",
-									"    pm.expect(target[1].event).equal(pm.collectionVariables.get(\"eid\"));\r",
+									"    pm.expect(target[0].event).equal(Number(pm.collectionVariables.get(\"eid\")));\r",
+									"    pm.expect(target[1].event).equal(Number(pm.collectionVariables.get(\"eid\")));\r",
 									"});"
 								],
 								"type": "text/javascript"
