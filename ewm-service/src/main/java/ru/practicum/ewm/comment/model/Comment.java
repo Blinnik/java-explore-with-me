@@ -1,4 +1,4 @@
-package ru.practicum.ewm.request.model;
+package ru.practicum.ewm.comment.model;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -9,27 +9,30 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "requests")
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@Table(name = "comments")
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Request {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @ManyToOne
-    @JoinColumn(name = "requester_id", nullable = false)
-    User requester;
+    @JoinColumn(name = "commentator_id")
+    User commentator;
 
     @ManyToOne
-    @JoinColumn(name = "event_id", nullable = false)
+    @JoinColumn(name = "event_id")
     Event event;
+
+    String text;
 
     LocalDateTime created;
 
-    @Enumerated(value = EnumType.STRING)
-    RequestStatus status;
+    @Column(name = "last_updated")
+    LocalDateTime lastUpdated;
 }
