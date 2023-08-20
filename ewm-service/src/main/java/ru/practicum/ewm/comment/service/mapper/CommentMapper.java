@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class CommentMapper {
     public static CommentDto toCommentDto(Comment comment) {
-        CommentDto commentDto = CommentDto.builder()
+        return CommentDto.builder()
                 .id(comment.getId())
                 .commentator(comment.getCommentator().getId())
                 .event(comment.getEvent().getId())
@@ -16,8 +16,6 @@ public class CommentMapper {
                 .text(comment.getText())
                 .created(comment.getCreated())
                 .build();
-        System.out.println(commentDto);
-        return commentDto;
     }
 
     public static List<CommentDto> toCommentDto(List<Comment> comments) {
