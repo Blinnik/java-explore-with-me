@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.comment.model.Comment;
 import ru.practicum.ewm.comment.model.dto.CommentDto;
 import ru.practicum.ewm.comment.repository.CommentRepository;
@@ -25,6 +26,7 @@ public class CommentPublicServiceImpl implements CommentPublicService {
     EventRepository eventRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentDto> getAll(Long eventId, PaginationConfig paginationConfig) {
         if (!eventRepository.existsById(eventId)) {
             throw new NotFoundException(String.format("Event with id=%s was not found", eventId));
@@ -38,6 +40,7 @@ public class CommentPublicServiceImpl implements CommentPublicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommentDto getOne(Long commId) {
         Comment comment = commentRepository.findById(commId)
                 .orElseThrow(() -> new NotFoundException(String.format("Comment with id=%s was not found", commId)));

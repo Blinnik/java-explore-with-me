@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.comment.model.Comment;
 import ru.practicum.ewm.comment.model.dto.CommentDto;
 import ru.practicum.ewm.comment.model.dto.CommentShortDto;
@@ -34,6 +35,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     RequestRepository requestRepository;
 
     @Override
+    @Transactional
     public CommentDto create(Long userId, Long eventId, CommentShortDto commentShortDto) {
         User commentator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id=%s was not found", userId)));
@@ -68,6 +70,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
+    @Transactional
     public CommentDto update(Long userId, Long eventId, CommentShortDto commentShortDto) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
@@ -90,6 +93,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
+    @Transactional
     public void delete(Long userId, Long eventId) {
         Comment comment = commentRepository.findByCommentatorIdAndEventId(userId, eventId)
                 .orElseThrow(() -> new NotFoundException("The user did not leave a comment on this event"));
@@ -101,6 +105,7 @@ public class CommentPrivateServiceImpl implements CommentPrivateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CommentDto getOne(Long userId, Long eventId) {
         Comment comment = commentRepository.findByCommentatorIdAndEventId(userId, eventId)
                 .orElseThrow(() -> new NotFoundException("The user did not leave a comment on this event"));

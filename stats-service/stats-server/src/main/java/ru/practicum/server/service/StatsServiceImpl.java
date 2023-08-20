@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.common.dto.EndpointHit;
 import ru.practicum.common.dto.ViewStats;
 import ru.practicum.server.model.Stats;
@@ -23,6 +24,7 @@ public class StatsServiceImpl implements StatsService {
     StatsRepository statsRepository;
 
     @Override
+    @Transactional
     public EndpointHit save(EndpointHit hit) {
         Stats stats = StatsMapper.toStats(hit);
 
@@ -33,6 +35,7 @@ public class StatsServiceImpl implements StatsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ViewStats> getAll(GetStatsParams params) {
         LocalDateTime start = params.getStart();
         LocalDateTime end = params.getEnd();

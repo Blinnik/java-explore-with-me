@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.model.dto.NewCategoryDto;
 import ru.practicum.ewm.category.model.dto.CategoryDto;
@@ -21,6 +22,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     CategoryRepository repository;
 
     @Override
+    @Transactional
     public CategoryDto create(NewCategoryDto newCategoryDto) {
         Category category = CategoryMapper.toCategory(newCategoryDto);
 
@@ -31,6 +33,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     }
 
     @Override
+    @Transactional
     public void delete(Long catId) {
         if (!repository.existsById(catId)) {
             throw new NotFoundException(String.format("Category with id=%s was not found", catId));
@@ -41,6 +44,7 @@ public class CategoryAdminServiceImpl implements CategoryAdminService {
     }
 
     @Override
+    @Transactional
     public CategoryDto update(Long catId, CategoryDto categoryDto) {
         if (!repository.existsById(catId)) {
             throw new NotFoundException(String.format("Category with id=%s was not found", catId));
