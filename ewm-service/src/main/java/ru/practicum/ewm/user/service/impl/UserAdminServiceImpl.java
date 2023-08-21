@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.common.param.PaginationConfig;
 import ru.practicum.ewm.user.model.User;
 import ru.practicum.ewm.user.model.dto.NewUserRequest;
@@ -24,6 +25,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     UserRepository repository;
 
     @Override
+    @Transactional
     public UserDto create(NewUserRequest userRequest) {
         User user = UserMapper.toUser(userRequest);
 
@@ -34,6 +36,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDto> getAll(List<Long> userIds, PaginationConfig paginationConfig) {
         List<User> users;
         if (userIds == null) {
@@ -47,6 +50,7 @@ public class UserAdminServiceImpl implements UserAdminService {
     }
 
     @Override
+    @Transactional
     public void delete(Long userId) {
         if (!repository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));

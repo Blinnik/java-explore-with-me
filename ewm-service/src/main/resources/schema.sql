@@ -55,3 +55,13 @@ CREATE TABLE IF NOT EXISTS compilations_events
     PRIMARY KEY (compilation_id, event_id)
 );
 
+CREATE TABLE IF NOT EXISTS comments
+(
+    id             BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    commentator_id BIGINT        NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+    event_id       BIGINT        NOT NULL REFERENCES events (id) ON DELETE CASCADE,
+    text           VARCHAR(2000) NOT NULL,
+    created        TIMESTAMP     NOT NULL,
+    last_updated   TIMESTAMP
+);
+

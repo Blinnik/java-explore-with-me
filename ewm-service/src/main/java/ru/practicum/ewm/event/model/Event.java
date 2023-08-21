@@ -24,7 +24,7 @@ public class Event {
 
     String annotation;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     Category category;
 
@@ -55,7 +55,7 @@ public class Event {
     @Column(name = "created_on")
     LocalDateTime createdOn;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "initiator_id", nullable = false)
     User initiator;
 

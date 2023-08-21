@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.common.param.PaginationConfig;
 import ru.practicum.ewm.event.model.Event;
 import ru.practicum.ewm.event.model.EventState;
@@ -34,6 +35,7 @@ public class EventAdminServiceImpl implements EventAdminService {
     QEvent qEvent = QEvent.event;
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventFullDto> getAll(List<Long> users, List<EventState> states, List<Long> categories,
                                      LocalDateTime rangeStart, LocalDateTime rangeEnd,
                                      PaginationConfig paginationConfig) {
@@ -71,6 +73,7 @@ public class EventAdminServiceImpl implements EventAdminService {
     }
 
     @Override
+    @Transactional
     public EventFullDto update(Long eventId, UpdateEventUserRequest updateEventUserRequest) {
         Event foundEvent = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException(String.format("Event with id=%s was not found", eventId)));

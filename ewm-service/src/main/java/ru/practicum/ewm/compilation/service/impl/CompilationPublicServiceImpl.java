@@ -6,6 +6,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.common.param.PaginationConfig;
 import ru.practicum.ewm.compilation.model.Compilation;
 import ru.practicum.ewm.compilation.model.dto.CompilationDto;
@@ -24,6 +25,7 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     CompilationRepository compilationRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<CompilationDto> getAll(Boolean pinned, PaginationConfig paginationConfig) {
         List<Compilation> compilations;
         Pageable pageable = paginationConfig.getPageable();
@@ -39,6 +41,7 @@ public class CompilationPublicServiceImpl implements CompilationPublicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CompilationDto getOne(Long compId) {
         Compilation compilation = compilationRepository.findById(compId)
                 .orElseThrow(

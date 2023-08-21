@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.model.dto.CategoryDto;
 import ru.practicum.ewm.category.repository.CategoryRepository;
@@ -24,6 +25,7 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public CategoryDto getOne(Long catId) {
         Category category = repository.findById(catId)
                 .orElseThrow(() -> new NotFoundException(String.format("Category with id=%s was not found", catId)));
@@ -33,6 +35,7 @@ public class CategoryPublicServiceImpl implements CategoryPublicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CategoryDto> getAll(PaginationConfig paginationConfig) {
         List<CategoryDto> categories = repository.findAll(paginationConfig.getPageable())
                 .map(CategoryMapper::toCategoryDto)

@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.stats.StatsClient;
 import ru.practicum.ewm.common.param.PaginationConfig;
 import ru.practicum.ewm.common.util.TimeFormatter;
@@ -57,6 +58,7 @@ public class EventPublicServiceImpl implements EventPublicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventFullDto getOne(Long eventId, HttpServletRequest request) {
         Event event = eventRepository.findByIdAndStateEquals(eventId, EventState.PUBLISHED)
                 .orElseThrow(() -> new NotFoundException(String.format("Event with id=%s was not found", eventId)));
@@ -80,6 +82,7 @@ public class EventPublicServiceImpl implements EventPublicService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventShortDto> getAll(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                       LocalDateTime rangeEnd, Boolean onlyAvailable, String sort,
                                       PaginationConfig paginationConfig, HttpServletRequest request) {

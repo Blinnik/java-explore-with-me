@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.category.model.Category;
 import ru.practicum.ewm.category.repository.CategoryRepository;
 import ru.practicum.ewm.common.param.PaginationConfig;
@@ -39,6 +40,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     RequestRepository requestRepository;
 
     @Override
+    @Transactional
     public EventFullDto create(Long userId, NewEventDto newEventDto) {
         User initiator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id=%s was not found", userId)));
@@ -56,6 +58,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventShortDto> getUserEvents(Long userId, PaginationConfig paginationConfig) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
@@ -68,6 +71,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventFullDto getOne(Long userId, Long eventId) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
@@ -83,6 +87,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional
     public EventFullDto update(Long userId, Long eventId, UpdateEventUserRequest updateEventUserRequest) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
@@ -105,6 +110,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getRequests(Long userId, Long eventId) {
         if (!userRepository.existsById(userId)) {
             throw new NotFoundException(String.format("User with id=%s was not found", userId));
@@ -123,6 +129,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
     }
 
     @Override
+    @Transactional
     public EventRequestStatusUpdateResult updateRequests(Long userId,
                                                          Long eventId,
                                                          EventRequestStatusUpdateRequest updateRequest) {

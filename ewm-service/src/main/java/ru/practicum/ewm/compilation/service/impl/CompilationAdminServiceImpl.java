@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.compilation.model.Compilation;
 import ru.practicum.ewm.compilation.model.dto.CompilationDto;
 import ru.practicum.ewm.compilation.model.dto.NewCompilationDto;
@@ -28,6 +29,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     EventRepository eventRepository;
 
     @Override
+    @Transactional
     public CompilationDto create(NewCompilationDto newCompilationDto) {
         List<Long> eventIds = newCompilationDto.getEvents();
         List<Event> events = getEventsByIdList(eventIds);
@@ -42,6 +44,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     }
 
     @Override
+    @Transactional
     public void delete(Long compId) {
         if (!compilationRepository.existsById(compId)) {
             throw new NotFoundException(String.format("Compilation with id=%s was not found", compId));
@@ -52,6 +55,7 @@ public class CompilationAdminServiceImpl implements CompilationAdminService {
     }
 
     @Override
+    @Transactional
     public CompilationDto update(Long compId, UpdateCompilationRequest updateCompilationRequest) {
         Compilation foundCompilation = compilationRepository.findById(compId)
                 .orElseThrow(
