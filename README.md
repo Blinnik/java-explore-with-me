@@ -38,7 +38,7 @@ The project consists of two modules:
 ```shell
 git clone git@github.com:Blinnik/java-explore-with-me.git
 ```
-4. Generate a jar of the project
+4. Generate module jars
 ```shell
 mvn install
 ```
